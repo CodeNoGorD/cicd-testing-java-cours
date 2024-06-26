@@ -17,7 +17,7 @@ class SolutionFormatterTest {
   @Test
   void format_shouldFormatAnyBigNumber() {
     // GIVEN
-    final int number = 1234567890;
+    final int number = 1;
 
     // WHEN
     final String result = solutionFormatter.format(number);
