@@ -61,13 +61,13 @@ node {
 
 }
 
-def imagePrune(containerName) {
-    try {
-        sh "docker image prune -f"
-        sh "docker stop $containerName"
-    } catch (ignored) {
-    }
-}
+// def imagePrune(containerName) {
+//     try {
+//         sh "docker image prune -f"
+//         sh "docker stop $containerName"
+//     } catch (ignored) {
+//     }
+// }
 
 def imageBuild(containerName, tag) {
     sh "docker build -t $containerName:$tag --pull --no-cache ."
