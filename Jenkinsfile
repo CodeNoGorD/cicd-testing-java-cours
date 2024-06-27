@@ -33,19 +33,19 @@ node {
             }
         }
 
-//         stage("Image Prune") {
-//             imagePrune(CONTAINER_NAME)
-//         }
+        stage("Image Prune") {
+            imagePrune(CONTAINER_NAME)
+        }
 
         stage('Image Build') {
             imageBuild(CONTAINER_NAME, CONTAINER_TAG)
         }
 
-//         stage('Push to Docker Registry') {
-//             withCredentials([usernamePassword(credentialsId: 'dockercredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-//                 pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
-//             }
-//         }
+        stage('Push to Docker Registry') {
+            withCredentials([usernamePassword(credentialsId: 'dockercredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
+            }
+        }
 
         stage('Run App') {
             withCredentials([usernamePassword(credentialsId: 'dockercredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -61,29 +61,32 @@ node {
 
 }
 
-// def imagePrune(containerName) {
-//     try {
-//         sh "docker image prune -f"
-//         sh "docker stop $containerName"
-//     } catch (ignored) {
-//     }
-// }
+def imagePrune(containerName) {
+    try {
+        sh "docker image prune -f"
+        sh "docker stop $containerName"
+    } catch (ignored) {
+    }
+}
 
 def imageBuild(containerName, tag) {
     sh "docker build -t $containerName:$tag --pull --no-cache ."
+    echo "1111111111111111111111111111111"
     echo "Image build complete"
 }
 
-// def pushToImage(containerName, tag, dockerUser, dockerPassword) {
-//     sh "docker login -u $dockerUser -p $dockerPassword"
-//     sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
-//     sh "docker push $dockerUser/$containerName:$tag"
-//     echo "Image push complete"
-// }
+def pushToImage(containerName, tag, dockerUser, dockerPassword) {
+    sh "docker login -u $dockerUser -p $dockerPassword"
+    sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
+    sh "docker push $dockerUser/$containerName:$tag"
+     echo "222222222222222222222222222222"
+    echo "Image push complete"
+}
 
 def runApp(containerName, tag, dockerHubUser, httpPort, envName) {
     sh "docker pull $dockerHubUser/$containerName:$tag"
     sh "docker run --rm --env SPRING_ACTIVE_PROFILES=$envName -d -p $httpPort:$httpPort --name $containerName $dockerHubUser/$containerName:$tag"
+    echo "3333333333333333333333333333333"
     echo "Application started on port: ${httpPort} (http)"
 }
 
