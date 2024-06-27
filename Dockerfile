@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM eclipse-temurin:21-jre-alpine
 
 ARG JAR_FILE=target/calculator.jar
 
