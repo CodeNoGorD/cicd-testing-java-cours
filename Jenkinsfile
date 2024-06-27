@@ -33,9 +33,9 @@ node {
             }
         }
 
-        stage("Image Prune") {
-            imagePrune(CONTAINER_NAME)
-        }
+//         stage("Image Prune") {
+//             imagePrune(CONTAINER_NAME)
+//         }
 
         stage('Image Build') {
             imageBuild(CONTAINER_NAME, CONTAINER_TAG)
