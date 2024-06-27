@@ -19,8 +19,7 @@ node {
         }
 
         stage('Build with test') {
-
-            sh "mvn clean install"
+           sh "MAVEN_OPTS='-Xmx1024m -XX:MaxPermSize=256m' mvn clean install"
         }
 
         stage('Sonarqube Analysis') {
